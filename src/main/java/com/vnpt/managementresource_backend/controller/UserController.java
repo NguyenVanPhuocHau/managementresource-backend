@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping( "api/user")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping( "api/v1/users")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("getall")
+    @GetMapping("")
     public List<User> getAllUser(){
         return userService.getAllUser();
     }
