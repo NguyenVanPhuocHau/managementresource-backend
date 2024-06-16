@@ -3,6 +3,7 @@ package com.vnpt.managementresource_backend.service.imp;
 import com.vnpt.managementresource_backend.model.DatabaseSequence;
 import com.vnpt.managementresource_backend.model.User;
 import com.vnpt.managementresource_backend.model.mapper.Mapper;
+import com.vnpt.managementresource_backend.payload.UpdateUserRequest;
 import com.vnpt.managementresource_backend.payload.UserRequest;
 import com.vnpt.managementresource_backend.respository.UserRespo;
 import com.vnpt.managementresource_backend.service.UserService;
@@ -40,11 +41,10 @@ public class UserImp implements UserService {
     }
 
     @Override
-    public User updateUser(long id, UserRequest userRequest) {
-        Optional<User> existingUser = userRespo.findById(id);
+    public User updateUser(User user) {
+        Optional<User> existingUser = userRespo.findById(user.getId());
         if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            Mapper.Usermapper(user,userRequest);
+
             return userRespo.save(user);
         }
         return null;

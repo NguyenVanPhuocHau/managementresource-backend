@@ -31,14 +31,20 @@ public class UserController {
         userService.removeUser(id);
     }
 
-    @PutMapping("updateUser/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody UserRequest userRequest){
-        Optional<User> existingUser = userService.getUserById(id);
+    @PutMapping("updateUser")
+    public ResponseEntity<User> updateUser( @RequestBody User user){
+        Optional<User> existingUser = userService.getUserById(user.getId());
         if (existingUser.isPresent()) {
-            User updatedUser = userService.updateUser(id, userRequest);
+            User updatedUser = userService.updateUser(user);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/{id}")
+    public Optional<User> getAllUser(@PathVariable long id){
+        return userService.getUserById(id);
+    }
+
 }
