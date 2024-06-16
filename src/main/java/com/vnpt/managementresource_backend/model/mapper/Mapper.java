@@ -7,6 +7,6 @@ public class Mapper {
     public static  void Usermapper(User user, UserRequest userRequest){
         user.setFullName(userRequest.getFullName());
         user.setEmail(userRequest.getEmail());
-        user.setRole(user.getRole());
+        user.setRole(userRequest.getRole());
     }
 }
