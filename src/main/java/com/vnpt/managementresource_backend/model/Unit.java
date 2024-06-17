@@ -1,5 +1,6 @@
 package com.vnpt.managementresource_backend.model;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 public class Unit {
     @Id
-    private String id;
+    @NotEmpty(message = "ID is required")
+    private long id;
+    @NotEmpty(message = "Name is required")
     private String name;
+    @NotEmpty(message = "Description is required")
     private String description;
     private List<Long> listUser;
 }
