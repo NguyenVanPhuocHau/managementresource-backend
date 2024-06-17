@@ -27,11 +27,12 @@ public class UserImp implements UserService {
     @Autowired
     MongoOperations mongoOperations;
     @Override
-    public void addUser(UserRequest request) {
+    public User addUser(UserRequest request) {
         User newUser = new User();
         newUser.setId(generateSequence("users_sequence"));
         Mapper.Usermapper(newUser,request);
         userRespo.save(newUser);
+        return newUser;
     }
 
     @Override
@@ -58,6 +59,29 @@ public class UserImp implements UserService {
     @Override
     public List<User> getAllUser() {
         return userRespo.findAll();
+    }
+
+    @Override
+    public List<User> findByIdIn(List<Long> ids) {
+        return userRespo.findByIdIn(ids);
+    }
+
+    @Override
+    public Optional<User> updateUnitUser(long idUser, long idUnit) {
+
+        Optional<User> userOptional = userRespo.findById(idUser);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUnitId(idUnit);
+            userRespo.save(user);
+            return Optional.of(user);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> getAllUserByUnitId(long id) {
+        return userRespo.findByUnitId(id);
     }
 
     public long generateSequence(String seqName) {

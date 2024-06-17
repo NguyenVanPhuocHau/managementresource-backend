@@ -1,6 +1,8 @@
 package com.vnpt.managementresource_backend.controller;
 
+import com.vnpt.managementresource_backend.model.Unit;
 import com.vnpt.managementresource_backend.model.User;
+import com.vnpt.managementresource_backend.payload.ChangeUnitOfUnitRequest;
 import com.vnpt.managementresource_backend.payload.UserRequest;
 import com.vnpt.managementresource_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,8 @@ public class UserController {
         return userService.getAllUser();
     }
     @PostMapping("addUser")
-    public void addUser(@RequestBody UserRequest request){
-        userService.addUser(request);
+    public User addUser(@RequestBody UserRequest request){
+        return userService.addUser(request);
     }
     @DeleteMapping("deleteUser/{id}")
     public void deleteUser(@PathVariable long id){
@@ -47,4 +49,22 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @PostMapping("/getByIds")
+    public List<User> getUsersByIds(@RequestBody List<Long> ids) {
+        return userService.findByIdIn(ids);
+    }
+    @GetMapping("/units/{id}")
+    public List<User> getUsersByIds(@PathVariable long id) {
+        return userService.getAllUserByUnitId(id);
+    }
+
+    @PutMapping("/changeUnit")
+    public ResponseEntity<User> updateUserUnitId(@RequestBody ChangeUnitOfUnitRequest changeUnitOfUnitRequest) {
+        Optional<User> updatedUser = userService.updateUnitUser(changeUnitOfUnitRequest.getIdUser(), changeUnitOfUnitRequest.getIdUnit());
+        if (updatedUser.isPresent()) {
+            return ResponseEntity.ok(updatedUser.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

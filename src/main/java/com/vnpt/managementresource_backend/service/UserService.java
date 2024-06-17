@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
-    void addUser(UserRequest request);
+    User addUser(UserRequest request);
     void removeUser(long id);
 
     User updateUser(User user);
@@ -17,4 +17,10 @@ public interface UserService {
     Optional<User> getUserById(long id);
 
     List<User> getAllUser();
+
+    List<User> findByIdIn(List<Long> ids);
+
+    Optional<User> updateUnitUser(long idUser, long idUnit);
+
+    List<User> getAllUserByUnitId(long id);
 }

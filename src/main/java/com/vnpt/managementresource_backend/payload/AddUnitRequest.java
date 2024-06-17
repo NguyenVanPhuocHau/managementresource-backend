@@ -1,20 +1,21 @@
 package com.vnpt.managementresource_backend.payload;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserRequest {
-    private String fullName;
-    private String email;
-    private String role;
-    private long unitId;
+public class AddUnitRequest {
+    private String name;
+    private String description;
+    private List<Long> listIdUser;
+
 }
