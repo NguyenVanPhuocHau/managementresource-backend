@@ -84,6 +84,12 @@ public class UserImp implements UserService {
         return userRespo.findByUnitId(id);
     }
 
+    @Override
+    public boolean isEmailExist(String email) {
+        return userRespo.existsByEmail(email);
+    }
+
+
     public long generateSequence(String seqName) {
         DatabaseSequence counter = mongoOperations.findAndModify(
                 Query.query(where("_id").is(seqName)),
@@ -92,4 +98,6 @@ public class UserImp implements UserService {
                 DatabaseSequence.class);
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
     }
+
+
 }

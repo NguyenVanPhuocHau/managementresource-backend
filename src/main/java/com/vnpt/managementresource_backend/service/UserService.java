@@ -23,4 +23,8 @@ public interface UserService {
     Optional<User> updateUnitUser(long idUser, long idUnit);
 
     List<User> getAllUserByUnitId(long id);
+
+    boolean isEmailExist(String email);
+
+
 }
