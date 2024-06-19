@@ -67,4 +67,12 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/check-email")
+    public ResponseEntity<String> checkEmailExists(@RequestParam String email) {
+        if (userService.isEmailExist(email)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email đã được đăng ký");
+        }
+        return ResponseEntity.ok("Email có thể sử dụng");
+    }
 }

@@ -6,6 +6,7 @@ import com.vnpt.managementresource_backend.model.User;
 import com.vnpt.managementresource_backend.model.mapper.Mapper;
 import com.vnpt.managementresource_backend.payload.AddUnitRequest;
 import com.vnpt.managementresource_backend.respository.UnitRespo;
+import com.vnpt.managementresource_backend.respository.UserRespo;
 import com.vnpt.managementresource_backend.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,8 @@ public class UnitImp implements UnitService {
 
     @Autowired
      UnitRespo unitRespo;
+    @Autowired
+    UserRespo userRespo;
 
 
     @Override
@@ -46,6 +49,13 @@ public class UnitImp implements UnitService {
 
     @Override
     public void removeUnit(long id) {
+        System.out.println(id);
+        for (User user: userRespo.findByUnitId(id)) {
+            System.out.println(user.toString());
+            user.setUnitId(144);
+            System.out.println(user.toString());
+            userRespo.save(user);
+        }
         unitRespo.deleteById(id);
     }
 

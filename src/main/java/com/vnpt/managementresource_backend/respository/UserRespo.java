@@ -13,4 +13,8 @@ public interface UserRespo extends MongoRepository<User,Long> {
 
     List<User> findByUnitId(long id);
 
+    boolean existsByEmail(String email);
+
+
+
 }
