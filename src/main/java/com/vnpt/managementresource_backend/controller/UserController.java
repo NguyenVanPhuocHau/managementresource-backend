@@ -1,9 +1,8 @@
 package com.vnpt.managementresource_backend.controller;
 
-import com.vnpt.managementresource_backend.model.Unit;
-import com.vnpt.managementresource_backend.model.User;
-import com.vnpt.managementresource_backend.payload.ChangeUnitOfUnitRequest;
-import com.vnpt.managementresource_backend.payload.UserRequest;
+import com.vnpt.managementresource_backend.database.User;
+import com.vnpt.managementresource_backend.payload.request.ChangeUnitOfUnitRequest;
+import com.vnpt.managementresource_backend.payload.request.UserRequest;
 import com.vnpt.managementresource_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,23 @@ public class UserController {
     public List<User> getAllUser(){
         return userService.getAllUser();
     }
+//    @PostMapping("addUser")
+//    public User addUser(@RequestBody UserRequest request){
+//               return userService.addUser(request);
+//    }
+
     @PostMapping("addUser")
-    public User addUser(@RequestBody UserRequest request){
-        return userService.addUser(request);
+    public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
+        try {
+
+            if (userService.isEmailExist(request.getEmail())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
+            }
+            User createdUser = userService.addUser(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create user: " + e.getMessage());
+        }
     }
     @DeleteMapping("deleteUser/{id}")
     public void deleteUser(@PathVariable long id){

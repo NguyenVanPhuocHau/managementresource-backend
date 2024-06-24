@@ -1,4 +1,4 @@
-package com.vnpt.managementresource_backend.payload;
+package com.vnpt.managementresource_backend.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

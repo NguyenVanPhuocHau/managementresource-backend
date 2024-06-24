@@ -1,5 +1,4 @@
-package com.vnpt.managementresource_backend.payload;
-
+package com.vnpt.managementresource_backend.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +11,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserRequest {
-    private String fullName;
-    private String email;
-    private String role;
-    private long unitId;
+public class ChangeUnitOfUnitRequest {
+    private long idUser;
+    private long idUnit;
 }
