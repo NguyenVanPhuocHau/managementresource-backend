@@ -1,10 +1,10 @@
-package com.vnpt.managementresource_backend.service.imp;
+package com.vnpt.managementresource_backend.service.imple;
 
-import com.vnpt.managementresource_backend.model.DatabaseSequence;
-import com.vnpt.managementresource_backend.model.Unit;
-import com.vnpt.managementresource_backend.model.User;
-import com.vnpt.managementresource_backend.model.mapper.Mapper;
-import com.vnpt.managementresource_backend.payload.AddUnitRequest;
+import com.vnpt.managementresource_backend.database.MogoFunc;
+import com.vnpt.managementresource_backend.database.Unit;
+import com.vnpt.managementresource_backend.database.User;
+import com.vnpt.managementresource_backend.models.mapper.Mapper;
+import com.vnpt.managementresource_backend.payload.request.AddUnitRequest;
 import com.vnpt.managementresource_backend.respository.UnitRespo;
 import com.vnpt.managementresource_backend.respository.UserRespo;
 import com.vnpt.managementresource_backend.service.UnitService;
@@ -12,24 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-
-import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Component
 public class UnitImp implements UnitService {
 
-    @Autowired
-    MongoOperations mongoOperations;
+   @Autowired
+    MogoFunc mogoFunc;
 
     @Autowired
      UnitRespo unitRespo;
@@ -40,8 +32,8 @@ public class UnitImp implements UnitService {
     @Override
     public Unit createUnit(AddUnitRequest addUnitRequest) {
         Unit newUnit = new Unit();
-        newUnit.setId(generateSequence("units_sequence"));
-        Mapper.Unitmapper(newUnit,addUnitRequest);
+        newUnit.setId(mogoFunc.generateSequence("units_sequence"));
+        Mapper.unitMapper(newUnit,addUnitRequest);
 
         unitRespo.save(newUnit);
         return newUnit;
@@ -49,11 +41,11 @@ public class UnitImp implements UnitService {
 
     @Override
     public void removeUnit(long id) {
-        System.out.println(id);
+
         for (User user: userRespo.findByUnitId(id)) {
-            System.out.println(user.toString());
-            user.setUnitId(144);
-            System.out.println(user.toString());
+
+//            user.setUnitId(150);
+
             userRespo.save(user);
         }
         unitRespo.deleteById(id);
@@ -89,12 +81,5 @@ public class UnitImp implements UnitService {
         return unitRespo.findById(id);
     }
 
-    public long generateSequence(String seqName) {
-        DatabaseSequence counter = mongoOperations.findAndModify(
-                Query.query(where("_id").is(seqName)),
-                new Update().inc("seq",1),
-                FindAndModifyOptions.options().returnNew(true).upsert(true),
-                DatabaseSequence.class);
-        return !Objects.isNull(counter) ? counter.getSeq() : 1;
-    }
+
 }

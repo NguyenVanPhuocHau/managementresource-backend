@@ -1,20 +1,25 @@
-package com.vnpt.managementresource_backend.model;
+package com.vnpt.managementresource_backend.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Document
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@Getter
 public class User {
     @Transient
     public static final String SEQUENCE_NAME = "users_sequence";
@@ -26,6 +31,13 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
     @NotEmpty(message = "Role is required")
-    private String role;
-    private long unitId;
+    private Set<Role> roles = new HashSet<>();
+    private String password;
+    @DBRef
+    @JsonIgnoreProperties({"listUser"})
+    private Unit unit;
+    @DBRef
+    private List<Customer> listCustomer;
+
+
 }

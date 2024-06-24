@@ -1,36 +1,28 @@
-package com.vnpt.managementresource_backend.service.imp;
+package com.vnpt.managementresource_backend.service.imple;
 
-import com.vnpt.managementresource_backend.model.DatabaseSequence;
-import com.vnpt.managementresource_backend.model.User;
-import com.vnpt.managementresource_backend.model.mapper.Mapper;
-import com.vnpt.managementresource_backend.payload.UpdateUserRequest;
-import com.vnpt.managementresource_backend.payload.UserRequest;
+import com.vnpt.managementresource_backend.database.MogoFunc;
+import com.vnpt.managementresource_backend.database.User;
+import com.vnpt.managementresource_backend.models.mapper.Mapper;
+import com.vnpt.managementresource_backend.payload.request.UserRequest;
 import com.vnpt.managementresource_backend.respository.UserRespo;
 import com.vnpt.managementresource_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-
-import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Component
 public class UserImp implements UserService {
     @Autowired
     UserRespo userRespo;
     @Autowired
-    MongoOperations mongoOperations;
+    MogoFunc mogoFunc;
     @Override
     public User addUser(UserRequest request) {
         User newUser = new User();
-        newUser.setId(generateSequence("users_sequence"));
-        Mapper.Usermapper(newUser,request);
+        newUser.setId(mogoFunc.generateSequence("users_sequence"));
+        Mapper.userMapper(newUser,request);
         userRespo.save(newUser);
         return newUser;
     }
@@ -72,7 +64,7 @@ public class UserImp implements UserService {
         Optional<User> userOptional = userRespo.findById(idUser);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setUnitId(idUnit);
+//            user.setUnitId(idUnit);
             userRespo.save(user);
             return Optional.of(user);
         }
@@ -90,14 +82,7 @@ public class UserImp implements UserService {
     }
 
 
-    public long generateSequence(String seqName) {
-        DatabaseSequence counter = mongoOperations.findAndModify(
-                Query.query(where("_id").is(seqName)),
-                new Update().inc("seq",1),
-                FindAndModifyOptions.options().returnNew(true).upsert(true),
-                DatabaseSequence.class);
-        return !Objects.isNull(counter) ? counter.getSeq() : 1;
-    }
+
 
 
 }

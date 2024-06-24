@@ -1,7 +1,7 @@
 package com.vnpt.managementresource_backend.service;
 
-import com.vnpt.managementresource_backend.model.User;
-import com.vnpt.managementresource_backend.payload.UserRequest;
+import com.vnpt.managementresource_backend.database.User;
+import com.vnpt.managementresource_backend.payload.request.UserRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,10 +1,8 @@
 package com.vnpt.managementresource_backend.service;
 
-import com.vnpt.managementresource_backend.model.Unit;
-import com.vnpt.managementresource_backend.model.User;
-import com.vnpt.managementresource_backend.payload.AddUnitRequest;
+import com.vnpt.managementresource_backend.database.Unit;
+import com.vnpt.managementresource_backend.payload.request.AddUnitRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

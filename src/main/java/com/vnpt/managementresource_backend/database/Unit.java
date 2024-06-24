@@ -1,10 +1,11 @@
-package com.vnpt.managementresource_backend.model;
+package com.vnpt.managementresource_backend.database;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -21,5 +22,6 @@ public class Unit {
     private String name;
     @NotEmpty(message = "Description is required")
     private String description;
-    private List<Long> listUser;
+    @DBRef
+    private List<User> listUser;
 }

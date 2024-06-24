@@ -1,4 +1,4 @@
-package com.vnpt.managementresource_backend.model;
+package com.vnpt.managementresource_backend.database;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,8 @@ public class DatabaseSequence {
     private String id;
 
     private long seq;
+
+
 
 
 }
