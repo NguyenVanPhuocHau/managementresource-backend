@@ -6,15 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class AddCustomerRequest {
-    private String fullName;
-    private String email;
-    private String phone;
-    private String problem;
-    private long userId;
+public class CustomRoleRequest {
+    private String name;
+    private List<Long> listPermissionId;
 }

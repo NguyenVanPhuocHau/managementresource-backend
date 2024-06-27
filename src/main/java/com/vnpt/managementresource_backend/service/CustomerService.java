@@ -3,6 +3,7 @@ package com.vnpt.managementresource_backend.service;
 import com.vnpt.managementresource_backend.database.Customer;
 import com.vnpt.managementresource_backend.database.User;
 import com.vnpt.managementresource_backend.payload.request.AddCustomerRequest;
+import com.vnpt.managementresource_backend.payload.request.UpdateCustomerRequest;
 import com.vnpt.managementresource_backend.payload.request.UserRequest;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,12 @@ public interface CustomerService {
     Customer addCustomer(AddCustomerRequest request);
     void removeCustomer(long id);
 
-    Customer updateCustomer(Customer customer);
+    Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest);
 
     Optional<Customer> getCustomerById(long id);
 
     List<Customer> getAllCustomer();
 
 
+    boolean isEmailExist(String email);
 }

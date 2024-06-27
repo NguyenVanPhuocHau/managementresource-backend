@@ -42,7 +42,7 @@ public class AuthController {
         UserDetailsImp userDetails = (UserDetailsImp) authentication.getPrincipal();
         List<String> roleList = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(new LoginResponse(userDetails.getId(),userDetails.getFullName(),userDetails.getEmail(),roleList,jwt,"Bearer"));
+        return ResponseEntity.ok(new LoginResponse(userDetails.getId(),userDetails.getFullName(),userDetails.getEmail(),userDetails.getRole(),userDetails.getListPermissionString(),jwt,"Bearer"));
 
     }
 

@@ -9,10 +9,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Document
 @Data
@@ -31,13 +28,15 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
     @NotEmpty(message = "Role is required")
-    private Set<Role> roles = new HashSet<>();
+    @DBRef
+    private Role role;
     private String password;
     @DBRef
     @JsonIgnoreProperties({"listUser"})
     private Unit unit;
     @DBRef
     private List<Customer> listCustomer;
+
 
 
 }
