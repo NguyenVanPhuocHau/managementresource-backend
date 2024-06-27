@@ -22,8 +22,8 @@ public class JwtUtils {
 
     @Value("2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D")
     private String secret;
-    @Value("3600000")
-    private int expiration = 3600000;
+    @Value("100000")
+    private int expiration;
     private static  final Logger logger =  LoggerFactory.getLogger(JwtUtils.class);
 
     public String generateJwtToken(Authentication authentication){

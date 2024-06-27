@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Setter
 @Getter
-public class AddCustomerRequest {
+public class UpdateCustomerRequest {
+    private long id;
     private String fullName;
     private String email;
     private String phone;

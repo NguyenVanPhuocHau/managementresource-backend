@@ -1,12 +1,17 @@
 package com.vnpt.managementresource_backend.service.imple;
 
 import com.vnpt.managementresource_backend.database.MogoFunc;
+import com.vnpt.managementresource_backend.database.Role;
+import com.vnpt.managementresource_backend.database.Unit;
 import com.vnpt.managementresource_backend.database.User;
 import com.vnpt.managementresource_backend.models.mapper.Mapper;
 import com.vnpt.managementresource_backend.payload.request.UserRequest;
+import com.vnpt.managementresource_backend.respository.RoleRespo;
+import com.vnpt.managementresource_backend.respository.UnitRespo;
 import com.vnpt.managementresource_backend.respository.UserRespo;
 import com.vnpt.managementresource_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,12 +22,25 @@ public class UserImp implements UserService {
     @Autowired
     UserRespo userRespo;
     @Autowired
+    RoleRespo roleRespo;
+    @Autowired
+    UnitRespo unitRespo;
+    @Autowired
     MogoFunc mogoFunc;
+    @Autowired
+    PasswordEncoder encoder;
     @Override
     public User addUser(UserRequest request) {
         User newUser = new User();
         newUser.setId(mogoFunc.generateSequence("users_sequence"));
         Mapper.userMapper(newUser,request);
+        newUser.setPassword(encoder.encode("000000"));
+        Role role = roleRespo.findById(request.getRoleId()).get();
+        newUser.setRole(role);
+        Unit unit = unitRespo.findById(request.getUnitId()).get();
+        newUser.setUnit(unit);
+        unit.getListUser().add(newUser);
+        unitRespo.save(unit);
         userRespo.save(newUser);
         return newUser;
     }

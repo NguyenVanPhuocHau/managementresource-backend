@@ -14,7 +14,7 @@ public class Mapper {
     public static  void userMapper(User user, UserRequest userRequest){
         user.setFullName(userRequest.getFullName());
         user.setEmail(userRequest.getEmail());
-        user.setRoles(userRequest.getRoles());
+//        user.get(userRequest.getRole());
 
 
     }
@@ -26,10 +26,10 @@ public class Mapper {
     }
 
     public static  void customerMapper(Customer customer, AddCustomerRequest addCustomerRequest){
-//        customer.setFullName(addCustomerRequest.getFullName());
-//        customer.setEmail(addCustomerRequest.getEmail());
-//        customer.setPhone(addCustomerRequest.getPhone());
-//        customer.setProblem(addCustomerRequest.getProblem());
-        BeanUtils.copyProperties(addCustomerRequest,customer);
+        customer.setFullName(addCustomerRequest.getFullName());
+        customer.setEmail(addCustomerRequest.getEmail());
+        customer.setPhone(addCustomerRequest.getPhone());
+        customer.setProblem(addCustomerRequest.getProblem());
+//        BeanUtils.copyProperties(addCustomerRequest,customer);
     }
 }
