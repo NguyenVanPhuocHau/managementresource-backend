@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +35,13 @@ public class UserImp implements UserService {
         User newUser = new User();
         newUser.setId(mogoFunc.generateSequence("users_sequence"));
         Mapper.userMapper(newUser,request);
-        newUser.setPassword(encoder.encode("000000"));
+        newUser.setPassword(encoder.encode(request.getPassword()));
         Role role = roleRespo.findById(request.getRoleId()).get();
         newUser.setRole(role);
         Unit unit = unitRespo.findById(request.getUnitId()).get();
         newUser.setUnit(unit);
         unit.getListUser().add(newUser);
+        newUser.setListCustomer(new ArrayList<>());
         unitRespo.save(unit);
         userRespo.save(newUser);
         return newUser;
@@ -82,7 +84,8 @@ public class UserImp implements UserService {
         Optional<User> userOptional = userRespo.findById(idUser);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-//            user.setUnitId(idUnit);
+            Unit unit = unitRespo.findById(idUnit).get();
+            user.setUnit(unit);
             userRespo.save(user);
             return Optional.of(user);
         }

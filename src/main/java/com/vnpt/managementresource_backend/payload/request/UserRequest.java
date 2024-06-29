@@ -18,6 +18,7 @@ import java.util.Set;
 public class UserRequest {
     private String fullName;
     private String email;
+    private String password;
     private long roleId;
     private long unitId;
 }
