@@ -83,6 +83,7 @@ public class SecurityConfig {
                                 .requestMatchers("api/v1/users/deleteUser/**").hasAuthority("REMOVE_USER")
                                 .requestMatchers("api/v1/users/addUser/**").hasAuthority("ADD_USER")
                                 .requestMatchers("api/v1/users/updateUser/**").hasAuthority("EDIT_USER")
+                                .requestMatchers("api/v1/users/changeUnit/**").hasAuthority("EDIT_USER")
                                 .requestMatchers("api/v1/units/deleteUnit/**").hasAuthority("REMOVE_UNIT")
                                 .requestMatchers("api/v1/units/createUnit/**").hasAuthority("ADD_UNIT")
                                 .requestMatchers("api/v1/units/updateUnit/**").hasAuthority("EDIT_UNIT")
