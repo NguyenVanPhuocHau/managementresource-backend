@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
-   @Autowired
+    @Autowired
     UserRespo userRespo;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRespo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Email Not Found username: " + email));

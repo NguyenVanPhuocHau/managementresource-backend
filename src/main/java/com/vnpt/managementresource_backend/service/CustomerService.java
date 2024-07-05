@@ -13,6 +13,7 @@ import java.util.Optional;
 @Service
 public interface CustomerService {
     Customer addCustomer(AddCustomerRequest request);
+
     void removeCustomer(long id);
 
     Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest);

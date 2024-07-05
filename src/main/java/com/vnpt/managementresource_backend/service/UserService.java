@@ -10,6 +10,7 @@ import java.util.Optional;
 @Service
 public interface UserService {
     User addUser(UserRequest request);
+
     void removeUser(long id);
 
     User updateUser(User user);

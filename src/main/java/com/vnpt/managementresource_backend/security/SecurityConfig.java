@@ -34,12 +34,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     @Bean
-    public UserDetailsService userDetailsService(){
-        return  new UserDetailsServiceImp();
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImp();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -47,12 +47,12 @@ public class SecurityConfig {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
-    public JwtTokenFilter jwtTokenFilter(){
-        return  new JwtTokenFilter();
+    public JwtTokenFilter jwtTokenFilter() {
+        return new JwtTokenFilter();
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationConfigurer(){
+    public DaoAuthenticationProvider authenticationConfigurer() {
         DaoAuthenticationProvider authProivder = new DaoAuthenticationProvider();
         authProivder.setUserDetailsService(userDetailsService());
         authProivder.setPasswordEncoder(passwordEncoder());
@@ -60,12 +60,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws  Exception{
-        return  authConfig.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -105,7 +105,6 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/js/**", "/images/**");
     }
-
 
 
 }

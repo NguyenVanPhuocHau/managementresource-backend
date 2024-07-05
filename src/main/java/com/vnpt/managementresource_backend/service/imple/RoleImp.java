@@ -20,6 +20,7 @@ public class RoleImp implements RoleService {
     PermissionRespo permissionRespo;
     @Autowired
     MogoFunc mogoFunc;
+
     @Override
     public List<Role> getAllRole() {
         return roleRespo.findAll();
@@ -30,7 +31,7 @@ public class RoleImp implements RoleService {
         Role customRole = new Role();
         customRole.setId(mogoFunc.generateSequence("roles_sequence"));
         customRole.setName(customRoleRequest.getName());
-        for (long id: customRoleRequest.getListPermissionId()) {
+        for (long id : customRoleRequest.getListPermissionId()) {
             Permission permission = permissionRespo.findById(id).get();
             customRole.getPermissions().add(permission);
         }

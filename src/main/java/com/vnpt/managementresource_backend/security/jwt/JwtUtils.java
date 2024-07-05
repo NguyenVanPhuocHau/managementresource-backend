@@ -22,11 +22,11 @@ public class JwtUtils {
 
     @Value("2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D")
     private String secret;
-    @Value("360000")
+    @Value("3600000")
     private int expiration;
-    private static  final Logger logger =  LoggerFactory.getLogger(JwtUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    public String generateJwtToken(Authentication authentication){
+    public String generateJwtToken(Authentication authentication) {
         UserDetailsImp userPrincial = (UserDetailsImp) authentication.getPrincipal();
         Date now = new Date();
         Date expriationDate = new Date(now.getTime() + expiration);
@@ -37,29 +37,28 @@ public class JwtUtils {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token){
+    public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret)
                 .parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 
-    public boolean validateToken(String token){
+    public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Invalid JWT token: " + e.getMessage());
         }
         return false;
     }
 
-    public String getToken(HttpServletRequest request){
+    public String getToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Bearer")){
-            return  authHeader.substring(7);
+        if (authHeader != null && authHeader.startsWith("Bearer")) {
+            return authHeader.substring(7);
         }
-        return  null;
+        return null;
     }
 
 }

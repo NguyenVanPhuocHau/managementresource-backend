@@ -28,7 +28,7 @@ public class UserDetailsImp implements UserDetails {
     private String role;
     private List<String> listPermissionString;
 
-    public UserDetailsImp(User user){
+    public UserDetailsImp(User user) {
         this.id = user.getId();
         this.fullName = user.getFullName();
         this.email = user.getEmail();
@@ -41,21 +41,18 @@ public class UserDetailsImp implements UserDetails {
 
     public Collection<? extends GrantedAuthority> getAuthorities(User user) {
         Set<GrantedAuthority> authorities = new HashSet<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
-            user.getRole().getPermissions().forEach(permission -> {
-                authorities.add(new SimpleGrantedAuthority(permission.getName()));
-            });
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+        user.getRole().getPermissions().forEach(permission -> {
+            authorities.add(new SimpleGrantedAuthority(permission.getName()));
+        });
 
         return authorities;
     }
 
 
-
-    public static UserDetails bulid(User user){
-        return  new UserDetailsImp(user);
+    public static UserDetails bulid(User user) {
+        return new UserDetailsImp(user);
     }
-
-
 
 
     @Override

@@ -25,11 +25,12 @@ public class CustomerImp implements CustomerService {
     UserRespo userRespo;
     @Autowired
     MogoFunc mogoFunc;
+
     @Override
     public Customer addCustomer(AddCustomerRequest request) {
         Customer newCustomer = new Customer();
         newCustomer.setId(mogoFunc.generateSequence("customers_sequence"));
-        Mapper.customerMapper(newCustomer,request);
+        Mapper.customerMapper(newCustomer, request);
         User user = userRespo.findById(request.getUserId()).get();
         newCustomer.setUser(user);
         user.getListCustomer().add(newCustomer);
@@ -45,7 +46,7 @@ public class CustomerImp implements CustomerService {
     @Override
     public Customer updateCustomer(UpdateCustomerRequest updateUserRequest) {
         Optional<Customer> existingCustomer = customerRespo.findById(updateUserRequest.getId());
-        if (existingCustomer.isPresent()){
+        if (existingCustomer.isPresent()) {
             Customer customer = existingCustomer.get();
             customer.setFullName(updateUserRequest.getFullName());
             customer.setEmail(updateUserRequest.getEmail());

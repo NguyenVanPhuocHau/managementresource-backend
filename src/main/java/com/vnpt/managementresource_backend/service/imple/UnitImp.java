@@ -20,11 +20,12 @@ import java.util.Optional;
 @Component
 public class UnitImp implements UnitService {
 
-   @Autowired
+    @Autowired
     MogoFunc mogoFunc;
 
     @Autowired
-     UnitRespo unitRespo;
+    UnitRespo unitRespo;
+
     @Autowired
     UserRespo userRespo;
 
@@ -33,7 +34,7 @@ public class UnitImp implements UnitService {
     public Unit createUnit(AddUnitRequest addUnitRequest) {
         Unit newUnit = new Unit();
         newUnit.setId(mogoFunc.generateSequence("units_sequence"));
-        Mapper.unitMapper(newUnit,addUnitRequest);
+        Mapper.unitMapper(newUnit, addUnitRequest);
 
         unitRespo.save(newUnit);
         return newUnit;
@@ -42,7 +43,7 @@ public class UnitImp implements UnitService {
     @Override
     public void removeUnit(long id) {
 
-        for (User user: userRespo.findByUnitId(id)) {
+        for (User user : userRespo.findByUnitId(id)) {
 
 //            user.setUnitId(150);
 
@@ -67,7 +68,7 @@ public class UnitImp implements UnitService {
 
     @Override
     public Page<Unit> getAll(Integer pageNo) {
-        Pageable pageable = PageRequest.of(pageNo-1,5);
+        Pageable pageable = PageRequest.of(pageNo - 1, 5);
         return this.unitRespo.findAll(pageable);
     }
 

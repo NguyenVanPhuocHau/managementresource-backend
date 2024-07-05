@@ -30,11 +30,12 @@ public class UserImp implements UserService {
     MogoFunc mogoFunc;
     @Autowired
     PasswordEncoder encoder;
+
     @Override
     public User addUser(UserRequest request) {
         User newUser = new User();
         newUser.setId(mogoFunc.generateSequence("users_sequence"));
-        Mapper.userMapper(newUser,request);
+        Mapper.userMapper(newUser, request);
         newUser.setPassword(encoder.encode(request.getPassword()));
         Role role = roleRespo.findById(request.getRoleId()).get();
         newUser.setRole(role);
@@ -101,9 +102,6 @@ public class UserImp implements UserService {
     public boolean isEmailExist(String email) {
         return userRespo.existsByEmail(email);
     }
-
-
-
 
 
 }

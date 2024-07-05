@@ -12,6 +12,7 @@ import java.util.List;
 public class PermissionImp implements PermissionService {
     @Autowired
     PermissionRespo permissionRespo;
+
     @Override
     public List<Permission> getAllPermission() {
         return permissionRespo.findAll();
